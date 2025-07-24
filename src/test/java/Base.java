@@ -21,9 +21,7 @@ public class Base {
       String ACCESS_KEY = System.getenv("BROWSERSTACK_ACCESS_KEY");
 
       // Device and platform
-      caps.setCapability("platformName", "Android");
-      caps.setCapability("device", "Samsung Galaxy S22 Ultra");  // You can change to another available device
-      caps.setCapability("os_version", "12.0");        // Match the device’s OS version
+      caps.setCapability("platformName", "Android");       // Match the device’s OS version
       caps.setCapability("app", "bs://35bc001c4dd6874cd42b2eb634aaf50302153d19");
 
 
