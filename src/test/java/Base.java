@@ -1,37 +1,44 @@
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.options.UiAutomator2Options;
-import io.appium.java_client.service.local.AppiumDriverLocalService;
-import io.appium.java_client.service.local.AppiumServiceBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.Duration;
 
 public class Base {
 
-  protected AppiumDriver driver;
-  protected static AppiumDriverLocalService service;
+    private AndroidDriver driver;
 
-  @BeforeEach
-  public void setUp() {
-    service = new AppiumServiceBuilder()
-            .withIPAddress("127.0.0.1")
-            .usingAnyFreePort()
-            //.withArgument(() -> "--log-level", "debug")
-            .build();
-    service.start();
+    @BeforeEach
+    public void setUp() throws MalformedURLException, URISyntaxException {
+      DesiredCapabilities caps = new DesiredCapabilities();
 
-    UiAutomator2Options options = new UiAutomator2Options()
-            .setUdid("emulator-5554")
-            .setPlatformName("Android")
-            .setAutomationName("UiAutomator2")
-            .setAppPackage("com.saucelabs.mydemoapp.rn")
-            .setAppActivity("MainActivity")
-            .eventTimings();
+      // BrowserStack authentication
+      String USERNAME = System.getenv("BROWSERSTACK_USERNAME");
+      String ACCESS_KEY = System.getenv("BROWSERSTACK_ACCESS_KEY");
 
-    driver = new AndroidDriver(service.getUrl(), options);
-    driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-  }
+      // Device and platform
+      caps.setCapability("platformName", "Android");
+      caps.setCapability("device", "Samsung Galaxy S22 Ultra");  // You can change to another available device
+      caps.setCapability("os_version", "12.0");        // Match the device’s OS version
+      caps.setCapability("app", "bs://35bc001c4dd6874cd42b2eb634aaf50302153d19");
+
+
+      // Optional metadata for BrowserStack dashboard
+      caps.setCapability("project", "My Demo Appium Project");
+      caps.setCapability("build", "GitHub Actions Build");
+      caps.setCapability("name", "Sample Test");
+
+      // Connect to BrowserStack hub
+      URI hubUri = new URI("https://" + USERNAME + ":" + ACCESS_KEY + "@hub-cloud.browserstack.com/wd/hub");
+      driver = new AndroidDriver(hubUri.toURL(), caps);
+
+      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+    }
+
 
   @AfterEach
   public void tearDown() {
