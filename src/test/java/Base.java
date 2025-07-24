@@ -10,7 +10,7 @@ import java.time.Duration;
 
 public class Base {
 
-    private AndroidDriver driver;
+    protected AndroidDriver driver;
 
     @BeforeEach
     public void setUp() throws MalformedURLException, URISyntaxException {
