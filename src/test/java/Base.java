@@ -7,6 +7,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Base {
 
@@ -25,16 +27,18 @@ public class Base {
       caps.setCapability("app", "bs://35bc001c4dd6874cd42b2eb634aaf50302153d19");
 
 
-      // Optional metadata for BrowserStack dashboard
-      caps.setCapability("project", "My Demo Appium Project");
-      caps.setCapability("build", "GitHub Actions Build");
-      caps.setCapability("name", "Sample Test");
+      // BrowserStack-specific options (no device or OS specified)
+      Map<String, Object> bstackOptions = new HashMap<>();
+      bstackOptions.put("projectName", "My Demo Appium Project");
+      bstackOptions.put("buildName", "GitHub Actions Build");
+      bstackOptions.put("sessionName", "Sample Test");
+      // BrowserStack will auto-select a device and OS
 
-      // Connect to BrowserStack hub
+      caps.setCapability("bstack:options", bstackOptions);
+
+      // Connect to BrowserStack
       URI hubUri = new URI("https://" + USERNAME + ":" + ACCESS_KEY + "@hub-cloud.browserstack.com/wd/hub");
       driver = new AndroidDriver(hubUri.toURL(), caps);
-
-      driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
     }
 
 
