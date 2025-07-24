@@ -24,10 +24,10 @@ public class Base {
 
       // Device and platform
       caps.setCapability("platformName", "Android");
-      caps.setCapability("app", "bs://35bc001c4dd6874cd42b2eb634aaf50302153d19"); // Match the device’s OS version
 
       // BrowserStack-specific options (no device or OS specified)
       Map<String, Object> bstackOptions = new HashMap<>();
+      bstackOptions.put("app", "bs://35bc001c4dd6874cd42b2eb634aaf50302153d19");
       bstackOptions.put("projectName", "My Demo Appium Project");
       bstackOptions.put("buildName", "GitHub Actions Build");
       bstackOptions.put("sessionName", "Sample Test");
