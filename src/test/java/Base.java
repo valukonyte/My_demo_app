@@ -31,7 +31,8 @@ public class Base {
       bstackOptions.put("projectName", "My Demo Appium Project");
       bstackOptions.put("buildName", "GitHub Actions Build");
       bstackOptions.put("sessionName", "Sample Test");
-      // BrowserStack will auto-select a device and OS
+      bstackOptions.put("deviceName", "Google Pixel 6");  // Required
+      bstackOptions.put("osVersion", "12.0");
 
       caps.setCapability("bstack:options", bstackOptions);
 
