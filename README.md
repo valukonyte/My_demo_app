@@ -25,6 +25,21 @@ This project uses a **pre-configured app (stored in my BrowserStack account)** a
 - The project is not configured for direct execution on other accounts (since the app ID `bs://35bc001c4dd6874cd42b2eb634aaf50302153d19` is linked to my BrowserStack workspace).
 
 ---
+## Test Reports
+
+This project automatically generates **Allure test reports** after each GitHub Actions run.
+
+### 📊 View the Latest Report (Live)
+You can view the latest test results online:
+[**Live Allure Report**](https://valukonyte.github.io/My_demo_app/)
+
+The report is automatically updated whenever tests run on `main` via GitHub Actions.
+
+### 📥 Download the Report (Offline)
+1. Go to the [Actions tab](https://github.com/valukonyte/My_demo_app/actions).
+2. Select the latest workflow run (`Run Appium Tests on BrowserStack (SDK 24)`).
+3. Scroll down to **Artifacts** and download `allure-report`.
+4. Extract the ZIP and open `index.html` in a browser.
 
 ### Why This Project?
 

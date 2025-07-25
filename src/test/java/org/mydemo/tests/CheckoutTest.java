@@ -1,5 +1,6 @@
 package org.mydemo.tests;
 
+import io.qameta.allure.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mydemo.tests.pages.*;
@@ -7,9 +8,10 @@ import org.mydemo.tests.utils.Messages;
 import org.mydemo.tests.utils.PageTitles;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CheckoutTest extends Base{
+@Epic("Checkout Flow")
+@Feature("Order Placement")
+public class CheckoutTest extends Base {
 
     MenuPage menuPage;
     LoginPage loginPage;
@@ -29,7 +31,6 @@ public class CheckoutTest extends Base{
         myCart = new MyCartPage(driver);
         checkoutPage = new CheckoutPage(driver);
 
-
         user = getUsername();
         password = getPassword();
 
@@ -44,6 +45,8 @@ public class CheckoutTest extends Base{
     }
 
     @Test
+    @Story("Verify Checkout Page Accessibility")
+    @Description("Checks if the user can navigate to the checkout page and verify its title.")
     public void shouldNavigateToCheckoutAndCheckTheTitle() {
         goToCheckout();
         assertTrue(checkoutPage.isCheckoutTitleDisplayed(PageTitles.CHECKOUT),
@@ -52,6 +55,8 @@ public class CheckoutTest extends Base{
     }
 
     @Test
+    @Story("Successful Order Completion")
+    @Description("Simulates a complete order placement with valid shipping and payment details.")
     public void shouldEnterAllRequiredInformationAndConfirmPayment() {
         goToCheckout();
         checkoutPage.enterShippingAddress();
@@ -66,6 +71,8 @@ public class CheckoutTest extends Base{
     }
 
     @Test
+    @Story("Validation of Mandatory Fields")
+    @Description("Ensures validation errors appear when trying to proceed without filling required fields.")
     public void shouldLeaveMandatoryFieldsEmpty() {
         goToCheckout();
         checkoutPage.proceedToPayment();
@@ -76,5 +83,4 @@ public class CheckoutTest extends Base{
                 () -> assertEquals(Messages.ZIP_CODE_ERROR_MESSAGE, checkoutPage.getFieldErrorText("Zip Code*")),
                 () -> assertEquals(Messages.COUNTRY_ERROR_MESSAGE, checkoutPage.getFieldErrorText("Country*")));
     }
-
 }

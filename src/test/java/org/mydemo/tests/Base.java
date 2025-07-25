@@ -2,9 +2,10 @@ package org.mydemo.tests;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
+import io.qameta.allure.junit5.AllureJunit5;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-
+import org.junit.jupiter.api.extension.ExtendWith;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -12,6 +13,7 @@ import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.Properties;
 
+@ExtendWith(AllureJunit5.class)
 public class Base {
   protected AndroidDriver driver;
   private final Properties properties = new Properties();
@@ -36,7 +38,6 @@ public class Base {
     String osVersion = System.getenv().getOrDefault("OS_VERSION", "12.0");
     String appId = System.getenv().getOrDefault("APP_ID", "bs://35bc001c4dd6874cd42b2eb634aaf50302153d19");
 
-    // Use UiAutomator2Options instead of DesiredCapabilities
     UiAutomator2Options options = new UiAutomator2Options();
     options.setPlatformName("Android");
     options.setDeviceName(device);

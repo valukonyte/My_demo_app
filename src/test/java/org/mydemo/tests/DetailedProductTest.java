@@ -1,5 +1,6 @@
 package org.mydemo.tests;
 
+import io.qameta.allure.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mydemo.tests.pages.ProductDetailedPage;
@@ -7,6 +8,8 @@ import org.mydemo.tests.pages.ProductsPage;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Epic("Product Details")
+@Feature("Detailed Product View and Cart")
 public class DetailedProductTest extends Base {
     ProductsPage productsPage;
     ProductDetailedPage productDetailedPage;
@@ -19,6 +22,8 @@ public class DetailedProductTest extends Base {
     }
 
     @Test
+    @Story("View Product Details")
+    @Description("Ensures all essential product details (title, price, reviews, colour options) are visible when a product page is opened.")
     public void shouldDisplayAllProductDetailsWhenProductIsOpened() {
         assertAll(
                 () -> assertTrue(productDetailedPage.isProductTitleVisible(), "Product title should be visible"),
@@ -31,6 +36,8 @@ public class DetailedProductTest extends Base {
     }
 
     @Test
+    @Story("Submit a Review")
+    @Description("Checks that a user can open the review modal by selecting a review star and see a confirmation message.")
     public void shouldOpenReviewModalWhenReviewStarIsSelected() {
         productDetailedPage.selectRandomReviewStar();
         assertTrue(productDetailedPage.isSubmittingReviewMessageDisplayed(),
@@ -41,6 +48,8 @@ public class DetailedProductTest extends Base {
     }
 
     @Test
+    @Story("Select Colour and Quantity, Add to Cart")
+    @Description("Verifies that a user can choose a product colour, adjust quantity, and successfully add the product to the cart with correct amounts displayed.")
     public void userShouldChooseTheColourAndAmountAndAddToTheCart() {
         productDetailedPage.selectRandomColour();
         int added = productDetailedPage.increaseQuantityUntilMax(6);
