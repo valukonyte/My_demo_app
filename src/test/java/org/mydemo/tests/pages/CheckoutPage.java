@@ -78,8 +78,11 @@ public class CheckoutPage extends PageBase{
         click(toPaymentButton);
     }
 
-    public void scrollToSeeErrorMessages(){
-        scrollUntilBottom();
+    public void scrollToSeeErrorMessages() {
+        driver.findElement(AppiumBy.androidUIAutomator(
+                "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView("
+                        + "new UiSelector().text(\"Please provide your zip\"));"
+        ));
     }
 
     public void reviewOrder(){
