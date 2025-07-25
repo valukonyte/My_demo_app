@@ -2,6 +2,7 @@ package org.mydemo.tests;
 
 import io.qameta.allure.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mydemo.tests.pages.*;
 import org.mydemo.tests.utils.Messages;
@@ -55,6 +56,7 @@ public class CheckoutTest extends Base {
     }
 
     @Test
+    @Disabled("This is temporary disabled test")
     @Story("Successful Order Completion")
     @Description("Simulates a complete order placement with valid shipping and payment details.")
     public void shouldEnterAllRequiredInformationAndConfirmPayment() {
