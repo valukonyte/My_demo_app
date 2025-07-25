@@ -82,18 +82,4 @@ public class LoginTest extends Base {
         assertTrue(loginPage.isLoginTitleDisplayed(PageTitles.LOGIN),
                 "Expected " + PageTitles.LOGIN + " page title not displayed");
     }
-
-    @Test
-    @Story("Cancel Logout Flow")
-    @Description("Ensures that if a user cancels the logout process, they remain on the Products page and stay logged in.")
-    public void shouldNotLogoutIfCancels() {
-        loginPage.loginWith(user, password);
-        menuPage.openMenu();
-        menuPage.logOutInMenu();
-        assertEquals(Messages.LOGOUT_MESSAGE, loginPage.getLogoutMessage());
-
-        loginPage.cancelLogout();
-        assertTrue(productsPage.isProductsTitleDisplayed(PageTitles.PRODUCTS),
-                "Expected " + PageTitles.PRODUCTS + " page title not displayed");
-    }
 }

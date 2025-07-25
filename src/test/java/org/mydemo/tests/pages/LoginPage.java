@@ -58,10 +58,6 @@ public class LoginPage extends PageBase {
         click(confirmLogoutButton);
     }
 
-    public void cancelLogout() {
-        click(cancelLogoutButton);
-    }
-
     public String getSuccessfulLogoutMessage() {
         return getText(successfulLogoutMessage);
     }
