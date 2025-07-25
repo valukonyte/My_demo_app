@@ -1,6 +1,5 @@
-package org.myDemo.pages;
+package org.mydemo.tests.pages;
 
-import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
@@ -11,7 +10,7 @@ public class MenuPage extends PageBase{
    super(appiumDriver);
     }
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().description(\"open menu\")")
+    @AndroidFindBy(accessibility = "open menu")
     private WebElement openMenu;
 
     @AndroidFindBy(accessibility = "menu item log in")
@@ -21,19 +20,21 @@ public class MenuPage extends PageBase{
     private WebElement logOut;
 
 
-    public void clickOpenMenuButton(){
-        waitForVisibility(openMenu);
-        openMenu.click();
+    public void openMenu(){
+        click(openMenu);
     }
 
-    public void clickLogInButton(){
-        waitForVisibility(logIn);
-        logIn.click();
+    public void logInInMenu(){
+        click(logIn);
     }
 
-    public void clickLogOutButton(){
-        waitForVisibility(logOut);
-        logOut.click();
+    public void navigateToLogin(){
+        openMenu();
+        logInInMenu();
+    }
+
+    public void logOutInMenu(){
+        click(logOut);
     }
 
 }

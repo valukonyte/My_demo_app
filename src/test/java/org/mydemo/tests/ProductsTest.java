@@ -1,26 +1,28 @@
+package org.mydemo.tests;
+
 import io.appium.java_client.AppiumBy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.myDemo.constants.PageTitles;
-import org.myDemo.pages.*;
+import org.mydemo.tests.pages.PageBase;
+import org.mydemo.tests.pages.ProductDetailedPage;
+import org.mydemo.tests.pages.ProductsPage;
+import org.mydemo.tests.utils.PageTitles;
 import org.openqa.selenium.WebElement;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ProductsTest extends Base {
-    PageBase pageBase;
     ProductsPage productsPage;
     ProductDetailedPage productDetailedPage;
 
     @BeforeEach
     public void setup() {
-        pageBase = new PageBase(driver);
         productsPage = new ProductsPage(driver);
         productDetailedPage = new ProductDetailedPage(driver);
     }
 
     @Test
     public void userShouldBeNavigatedToProductsPage() {
-        assertTrue(pageBase.pageTitleIsDisplayed(PageTitles.PRODUCTS),
+        assertTrue(productsPage.isProductsTitleDisplayed(PageTitles.PRODUCTS),
                 "Expected " + PageTitles.PRODUCTS + " page title not displayed");
     }
 

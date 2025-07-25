@@ -1,4 +1,4 @@
-package org.myDemo.pages;
+package org.mydemo.tests.pages;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 import java.util.Random;
+
+import static org.mydemo.tests.utils.TestUtils.getRandomElement;
 
 public class ProductDetailedPage extends PageBase{
     public ProductDetailedPage(AppiumDriver appiumDriver) {
@@ -39,28 +41,23 @@ public class ProductDetailedPage extends PageBase{
     @AndroidFindBy(uiAutomator = "new UiSelector().description(\"cart badge\").childSelector(new UiSelector().className(\"android.widget.TextView\"))")
     private WebElement cartBadgeAmount;
 
+    @AndroidFindBy(accessibility = "cart badge")
+    private WebElement cartBadge;
+
     @AndroidFindBy(uiAutomator = "new UiSelector().description(\"counter amount\").childSelector(new UiSelector().className(\"android.widget.TextView\"))")
     private WebElement counterAmount;
 
 
-    public WebElement productTitle() {
-        waitForVisibility(productTitle);
-        return productTitle;
+    public boolean isProductTitleVisible() {
+        return isDisplayed(productTitle);
     }
 
-    public WebElement productPrice() {
-        waitForVisibility(productPrice);
-        return productPrice;
+    public boolean isProductPriceVisible() {
+        return isDisplayed(productPrice);
     }
 
     public String getProductTitle() {
-        waitForVisibility(productTitle);
-        return productTitle.getText();
-    }
-
-    public double removeCurrency(WebElement priceWithCurrency) {
-        String price = priceWithCurrency.getText().replace("$", "");
-        return Double.parseDouble(price);
+       return getText(productTitle);
     }
 
     public double getProductPrice() {
@@ -68,60 +65,73 @@ public class ProductDetailedPage extends PageBase{
         return removeCurrency(productPrice);
     }
 
-    public List<WebElement> getReviewStars() {
-        return reviewStars;
+    public boolean hasReviewStars() {
+        waitForAllElementsVisibility(reviewStars);
+        return !reviewStars.isEmpty();
     }
 
-    public List<WebElement> getColourCircles() {
+    public int countReviewStars() {
+        return getSize(reviewStars);
+    }
+
+    public boolean hasColourCircles() {
         waitForAllElementsVisibility(colourCircles);
-        return colourCircles;
+        return !colourCircles.isEmpty();
     }
 
-    public void clickRandomStar() {
+    public int countColourCircles() {
+        return getSize(colourCircles);
+    }
+
+    public void selectRandomReviewStar() {
+        waitForAllElementsVisibility(reviewStars);
         getRandomElement(reviewStars).click();
     }
 
-
-    public void clickRandomColour() {
+    public void selectRandomColour() {
+        waitForAllElementsVisibility(colourCircles);
         getRandomElement(colourCircles).click();
     }
 
-
-    public void getSubmittingReviewMessage() {
-        waitForVisibility(submittingReviewMessage);
-        submittingReviewMessage.isDisplayed();
+    public boolean isSubmittingReviewMessageDisplayed() {
+        return isDisplayed(submittingReviewMessage);
     }
 
     public void closeReviewModal() {
-        waitForVisibility(closeModalButton);
-        closeModalButton.click();
+        click(closeModalButton);
     }
 
-    public int increaseProductAmount(int maxClicks) {
-        int count = new Random().nextInt(maxClicks + 1);
-        for (int i = 0; i < count; i++) {
-            waitForVisibility(counterPlusButton);
-            counterPlusButton.click();
+    public void increaseProductAmount(int times) {
+        for (int i = 0; i < times; i++) {
+            click(counterPlusButton);
         }
+    }
+
+    public int increaseQuantityUntilMax(int maxClicks) {
+        int count = new Random().nextInt(maxClicks + 1);
+        increaseProductAmount(count);
         return count;
     }
 
-    public void clickAddToCartButton() {
-        waitForVisibility(addToCartButton);
-        addToCartButton.click();
+    public void addToCart() {
+        click(addToCartButton);
+    }
+
+    private int parseIntFromElement(WebElement element) {
+        return Integer.parseInt(getText(element));
     }
 
     public int getCartBadgeAmount() {
-        waitForVisibility(cartBadgeAmount);
-        return Integer.parseInt(cartBadgeAmount.getText());
+        return parseIntFromElement(cartBadgeAmount);
     }
 
     public int getCounterAmount() {
-        waitForVisibility(counterAmount);
-        return Integer.parseInt(counterAmount.getText());
+        return parseIntFromElement(counterAmount);
     }
 
-
-
+    public void navigateToCart() {
+        click(addToCartButton);
+        click(cartBadge);
+    }
 
 }

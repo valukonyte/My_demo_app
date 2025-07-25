@@ -1,4 +1,4 @@
-package org.myDemo.pages;
+package org.mydemo.tests.pages;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
@@ -26,53 +26,48 @@ public class LoginPage extends PageBase {
     private WebElement logoutMessage;
 
     @AndroidFindBy(id = "android:id/button1")
-    private WebElement button;
+    private WebElement confirmLogoutButton;
 
     @AndroidFindBy(id = "android:id/button2")
-    private WebElement cancelButton;
+    private WebElement cancelLogoutButton;
 
     @AndroidFindBy(id = "android:id/alertTitle")
     private WebElement successfulLogoutMessage;
 
 
     public void loginWith(String username, String password) {
-        waitForVisibility(usernameInputField);
-        usernameInputField.sendKeys(username);
+        sendKeys(usernameInputField, username);
+        sendKeys(passwordInputField, password);
 
-        waitForVisibility(passwordInputField);
-        passwordInputField.sendKeys(password);
-
-        loginButton.click();
+        click(loginButton);
     }
 
     public boolean credentialsErrorMessageIsDisplayed() {
-        waitForVisibility(errorMessage);
-        return errorMessage.isDisplayed();
+        return isDisplayed(errorMessage);
     }
 
     public String getCredentialsErrorMessage() {
-        waitForVisibility(errorMessage);
-        return errorMessage.getText();
+        return getText(errorMessage);
     }
 
     public String getLogoutMessage() {
-        waitForVisibility(logoutMessage);
-        return logoutMessage.getText();
+        return getText(logoutMessage);
     }
 
-    public void clickOKButton() {
-        waitForVisibility(button);
-        button.click();
+    public void confirmLogout() {
+        click(confirmLogoutButton);
     }
 
-    public void clickCancelButton() {
-        waitForVisibility(cancelButton);
-        cancelButton.click();
+    public void cancelLogout() {
+        click(cancelLogoutButton);
     }
 
     public String getSuccessfulLogoutMessage() {
-        waitForVisibility(successfulLogoutMessage);
-        return successfulLogoutMessage.getText();
+        return getText(successfulLogoutMessage);
+    }
+
+    public boolean isLoginTitleDisplayed(String title) {
+        return isPageTitleVisible(title);
     }
 
 }

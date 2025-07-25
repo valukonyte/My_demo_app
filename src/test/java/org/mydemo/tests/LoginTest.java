@@ -1,13 +1,15 @@
+package org.mydemo.tests;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
-import org.myDemo.constants.PageTitles;
-import org.myDemo.constants.ValidCredentials;
-import org.myDemo.pages.LoginPage;
-import org.myDemo.pages.MenuPage;
-import org.myDemo.pages.PageBase;
+import org.mydemo.tests.pages.ProductsPage;
+import org.mydemo.tests.utils.Messages;
+import org.mydemo.tests.utils.PageTitles;
+import org.mydemo.tests.pages.LoginPage;
+import org.mydemo.tests.pages.MenuPage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,27 +17,32 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class LoginTest extends Base {
     MenuPage menuPage;
     LoginPage loginPage;
-    PageBase pageBase;
+    ProductsPage productsPage;
+
+    String user;
+    String password;
+
 
     @BeforeEach
     public void loginPageSetup() {
-        pageBase = new PageBase(driver);
         menuPage = new MenuPage(driver);
         loginPage = new LoginPage(driver);
+        productsPage = new ProductsPage(driver);
 
-        menuPage.clickOpenMenuButton();
-        menuPage.clickLogInButton();
+        user = getUsername();
+        password = getPassword();
+
+        menuPage.openMenu();
+        menuPage.logInInMenu();
     }
 
     @Test
     public void shouldLoginSuccessfullyWithValidCredentials() {
-        loginPage.loginWith(ValidCredentials.VALID_USERNAME, ValidCredentials.VALID_PASSWORD);
+        loginPage.loginWith(user, password);
 
-        assertTrue(pageBase.pageTitleIsDisplayed(PageTitles.PRODUCTS),
+        assertTrue(productsPage.isProductsTitleDisplayed(PageTitles.PRODUCTS),
                 "Expected " + PageTitles.PRODUCTS + " page title not displayed");
     }
-
-
 
     @ParameterizedTest(name = "Invalid login with user: {0}")
     @CsvFileSource(resources = "/testData/credentials.csv", numLinesToSkip = 1)
@@ -43,7 +50,7 @@ public class LoginTest extends Base {
         loginPage.loginWith(username, password);
 
         Assertions.assertAll(
-                () -> assertTrue(pageBase.pageTitleIsDisplayed(PageTitles.LOGIN),
+                () -> assertTrue(loginPage.isLoginTitleDisplayed(PageTitles.LOGIN),
                         "Expected page title '" + PageTitles.LOGIN + "' is not displayed"),
                 () -> assertTrue(loginPage.credentialsErrorMessageIsDisplayed(),
                         "Expected error message is not displayed"),
@@ -52,31 +59,30 @@ public class LoginTest extends Base {
         );
     }
 
-
     @Test
     public void shouldLogoutSuccessfully() {
-        loginPage.loginWith(ValidCredentials.VALID_USERNAME, ValidCredentials.VALID_PASSWORD);
-        menuPage.clickOpenMenuButton();
-        menuPage.clickLogOutButton();
-        assertEquals("Are you sure you sure you want to logout?", loginPage.getLogoutMessage());
+        loginPage.loginWith(user, password);
+        menuPage.openMenu();
+        menuPage.logOutInMenu();
+        assertEquals(Messages.LOGOUT_MESSAGE, loginPage.getLogoutMessage());
 
-        loginPage.clickOKButton();
-        assertEquals("You are successfully logged out.", loginPage.getSuccessfulLogoutMessage());
+        loginPage.confirmLogout();
+        assertEquals(Messages.SUCCESSFUL_LOGOUT_MESSAGE, loginPage.getSuccessfulLogoutMessage());
 
-        loginPage.clickOKButton();
-        assertTrue(pageBase.pageTitleIsDisplayed(PageTitles.LOGIN),
+        loginPage.confirmLogout();
+        assertTrue(loginPage.isLoginTitleDisplayed(PageTitles.LOGIN),
                 "Expected " + PageTitles.LOGIN + " page title not displayed");
     }
 
     @Test
     public void shouldNotLogoutIfCancels() {
-        loginPage.loginWith(ValidCredentials.VALID_USERNAME, ValidCredentials.VALID_PASSWORD);
-        menuPage.clickOpenMenuButton();
-        menuPage.clickLogOutButton();
-        assertEquals("Are you sure you sure you want to logout?", loginPage.getLogoutMessage());
+        loginPage.loginWith(user, password);
+        menuPage.openMenu();
+        menuPage.logOutInMenu();
+        assertEquals(Messages.LOGOUT_MESSAGE, loginPage.getLogoutMessage());
 
-        loginPage.clickCancelButton();
-        assertTrue(pageBase.pageTitleIsDisplayed(PageTitles.PRODUCTS),
+        loginPage.cancelLogout();
+        assertTrue(productsPage.isProductsTitleDisplayed(PageTitles.PRODUCTS),
                 "Expected " + PageTitles.PRODUCTS + " page title not displayed");
     }
 
