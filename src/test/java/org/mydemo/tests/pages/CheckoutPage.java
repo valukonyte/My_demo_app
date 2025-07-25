@@ -59,7 +59,7 @@ public class CheckoutPage extends PageBase{
     }
 
     public void enterShippingAddress(){
-        scrollUntilBottom();
+       // scrollUntilBottom();
         sendKeys(fullNameInputField, TestUtils.generateRandomFullName());
         sendKeys(addressLineInputField, TestUtils.generateRandomStreetAddress());
         sendKeys(cityInputField, TestUtils.generateRandomCity());
