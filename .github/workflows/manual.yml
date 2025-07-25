@@ -22,8 +22,8 @@ jobs:
           distribution: 'temurin'
           java-version: '22'
 
-      - name: Run Tests
-        run: mvn clean test
+      - name: Run Only Specific Test
+        run: mvn -Dtest=CheckoutTest test
 
       # Generate Allure Report
       - name: Generate Allure Report

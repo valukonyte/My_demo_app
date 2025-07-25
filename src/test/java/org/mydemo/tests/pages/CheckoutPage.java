@@ -78,6 +78,10 @@ public class CheckoutPage extends PageBase{
         click(toPaymentButton);
     }
 
+    public void scrollToSeeErrorMessages(){
+        scrollUntilBottom();
+    }
+
     public void reviewOrder(){
         click(reviewOrderButton);
     }
@@ -87,7 +91,6 @@ public class CheckoutPage extends PageBase{
     }
 
     public String getFieldErrorText(String fieldName){
-        scrollUntilBottom();
         WebElement error = driver.findElement(AppiumBy.androidUIAutomator(
                 "new UiSelector().descriptionContains(\""+fieldName+"-error-message\").childSelector(new UiSelector())"));
         return getText(error);

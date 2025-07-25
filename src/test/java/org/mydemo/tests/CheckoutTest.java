@@ -76,6 +76,7 @@ public class CheckoutTest extends Base {
     public void shouldLeaveMandatoryFieldsEmpty() {
         goToCheckout();
         checkoutPage.proceedToPayment();
+        checkoutPage.scrollToSeeErrorMessages();
         assertAll(
                 () -> assertEquals(Messages.FULL_NAME_ERROR_MESSAGE, checkoutPage.getFieldErrorText("Full Name*")),
                 () -> assertEquals(Messages.ADDRESS_ERROR_MESSAGE, checkoutPage.getFieldErrorText("Address Line 1*")),
