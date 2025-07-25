@@ -35,7 +35,7 @@ public class Base {
 
     // Device, OS, and app are configurable via env variables
     String device = System.getenv().getOrDefault("DEVICE_NAME", "Google Pixel 5");
-    String osVersion = System.getenv().getOrDefault("OS_VERSION", "12.0");
+    String osVersion = System.getenv().getOrDefault("OS_VERSION", "11.0");
     String appId = System.getenv().getOrDefault("APP_ID", "bs://35bc001c4dd6874cd42b2eb634aaf50302153d19");
 
     UiAutomator2Options options = new UiAutomator2Options();
