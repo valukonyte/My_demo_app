@@ -35,11 +35,6 @@ You can view the latest test results online:
 
 The report is automatically updated whenever tests run on `main` via GitHub Actions.
 
-### 📥 Download the Report (Offline)
-1. Go to the [Actions tab](https://github.com/valukonyte/My_demo_app/actions).
-2. Select the latest workflow run (`Run Appium Tests on BrowserStack (SDK 24)`).
-3. Scroll down to **Artifacts** and download `allure-report`.
-4. Extract the ZIP and open `index.html` in a browser.
 
 ### Why This Project?
 
